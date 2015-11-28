@@ -38,13 +38,16 @@ function! s:switch_to_workbench()
   execute 'b!' s:workbench_bfr
 endfunction
 
-function! vader#window#open()
+function! vader#window#close()
   execute 'silent! bd' s:console_bfr
   execute 'silent! bd' s:workbench_bfr
   if bufexists(s:quickfix_bfr)
     execute "silent! bd ".s:quickfix_bfr
   endif
+endfunction
 
+function! vader#window#open()
+  call vader#window#close()
   let s:prev_winid = exists('*win_getid') ? win_getid() : 0
   tabnew
   setlocal buftype=nofile noswapfile nospell
